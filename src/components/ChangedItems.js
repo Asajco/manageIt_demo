@@ -6,6 +6,7 @@ import { db } from '../firebase/config'
 import { CheckIcon } from '@chakra-ui/icons'
 import { doc, updateDoc } from 'firebase/firestore'
 import { PiFileXDuotone } from 'react-icons/pi'
+import OutOfItems from './OutOfItems'
 const ChangedItems = () => {
   const { setItems, items } = useHook()
   const toast = useToast()
@@ -25,7 +26,7 @@ const ChangedItems = () => {
   let filteredItems = changedItems(items).filter((item) => item.hasBeenChanged)
   console.log(filteredItems.length)
   return (
-    <Box minH="70vh">
+    <Box minH="70vh" fontFamily="Roboto">
       {filteredItems.length > 0 ? (
         filteredItems.map((item) => (
           <Flex
@@ -54,6 +55,7 @@ const ChangedItems = () => {
           </Text>
         </Flex>
       )}
+      <OutOfItems />
     </Box>
   )
 }
