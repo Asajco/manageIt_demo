@@ -6,7 +6,7 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import Home from './components/Home'
 import { useHook } from './hooks/useFetch'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 function App() {
   const { loading } = useHook()
 
@@ -19,13 +19,11 @@ function App() {
         </Box>
       ) : (
         <div>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/changed" element={<ChangedItems />} />
-              <Route path="/addNew" element={<AddItemForm />} />
-            </Routes>
-          </BrowserRouter>
+          <Routes>
+            <Route path="" element={<Home />} />
+            <Route path="changed" element={<ChangedItems />} />
+            <Route path="addNew" element={<AddItemForm />} />
+          </Routes>
         </div>
       )}
       <Footer />

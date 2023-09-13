@@ -40,6 +40,7 @@ const Home = () => {
     const docRef = doc(db, 'items', itemId)
     updateDoc(docRef, { count: Number(newCount) })
   }
+  console.log(items)
   return (
     <Box p={3} minHeight="70.5vh">
       <form
