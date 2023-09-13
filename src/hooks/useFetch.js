@@ -17,10 +17,9 @@ export const useHook = () => {
           data.count = Number(data.count)
           return data
         })
-        console.log(itemData)
+
         setItems(itemData)
         setLoading(false)
-        console.log(items)
       } catch (error) {
         console.log(error)
       }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useHook } from '../hooks/useFetch'
+
 import { useForm } from 'react-hook-form'
 import { filteredData } from '../functions/filterData'
 import { db } from '../firebase/config'
@@ -38,11 +39,11 @@ const Home = () => {
 
     // Update the count in Firebase
     const docRef = doc(db, 'items', itemId)
-    updateDoc(docRef, { count: Number(newCount) })
+    updateDoc(docRef, { count: Number(newCount), hasBeenChanged: true })
   }
-  console.log(items)
+
   return (
-    <Box p={3} minHeight="70.5vh">
+    <Box p={3} minHeight="70.5vh" color="black">
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{
@@ -59,7 +60,7 @@ const Home = () => {
           value={category}
         >
           <option value="" disabled>
-            Vyber categóriu
+            Vyber kategóriu
           </option>
           <option value="rum">Rum</option>
           <option value="vodka">Vodka</option>
@@ -94,7 +95,7 @@ const Home = () => {
               <Flex gap={2}>
                 <Button
                   onClick={() => {
-                    const newCount = item.count - 1
+                    const newCount = item.count != 0 && item.count - 1
                     updateItemCount(item.id, newCount)
                   }}
                   size="xs"
