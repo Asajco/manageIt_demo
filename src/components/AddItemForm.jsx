@@ -49,9 +49,9 @@ const AddItemForm = () => {
           <option value="whiskey">Whiskey</option>
           <option value="destilaty">Destiláty</option>
           <option value="nealko">Nealko</option>
-
+          <option value="pivo">Pivo</option>
+          <option value="vino">Víno</option>
           <option value="other">Ostatný alkohol</option>
-          <option value="snacks">Snacky</option>
         </select>
 
         <input {...register('count')} type="number" />

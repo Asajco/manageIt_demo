@@ -8,7 +8,7 @@ import { doc, updateDoc } from 'firebase/firestore'
 import { PiFileXDuotone } from 'react-icons/pi'
 import OutOfItems from './OutOfItems'
 const ChangedItems = () => {
-  const { setItems, items } = useHook()
+  const { setItems, items, setLowItemsCount } = useHook()
   const toast = useToast()
 
   const updateItem = (itemId) => {

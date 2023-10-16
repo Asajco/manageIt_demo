@@ -5,6 +5,7 @@ import { db } from '../firebase/config'
 export const useHook = () => {
   const [items, setItems] = useState([])
   const [lowItems, setLowItems] = useState([])
+  const [lowItemsCount, setLowItemsCount] = useState([])
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     const getData = async () => {
@@ -21,6 +22,8 @@ export const useHook = () => {
         const lowItemsData = lowItemsSnapshot.docs.map((doc) => doc.data())
         setLowItems(lowItemsData)
         setItems(itemData)
+        const changedItems = itemData.filter((item) => item.hasBeenChanged)
+        setLowItemsCount([...lowItemsData, ...changedItems])
         setLoading(false)
       } catch (error) {
         console.log(error)
@@ -30,5 +33,13 @@ export const useHook = () => {
 
     console.log(items)
   }, [])
-  return { items, setItems, loading, lowItems, setLowItems }
+  return {
+    items,
+    setItems,
+    loading,
+    lowItems,
+    setLowItems,
+    setLowItemsCount,
+    lowItemsCount,
+  }
 }
