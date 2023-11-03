@@ -1,11 +1,9 @@
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { WarningIcon } from '@chakra-ui/icons'
-import { AiFillHome } from 'react-icons/ai'
-import { PiWarningCircleFill } from 'react-icons/pi'
+
 import { useHook } from '../hooks/useFetch'
 import { changedItems } from '../functions/changedItems'
+
 const Header = () => {
   const image = require('../assets/break.jpeg')
   const { lowItems, items, lowItemsCount } = useHook()
@@ -14,8 +12,7 @@ const Header = () => {
 
   //   let lowItemsCount =
   //     lowItems.length + items.filter((item) => item.hasBeenChanged).length
-  console.log(lowItemsCount)
-  console.log(lowItems.length)
+
   return (
     <Flex
       backgroundColor="#b31b22"
@@ -24,14 +21,7 @@ const Header = () => {
       alignItems="center"
       position="relative"
     >
-      <Link to="/">
-        <AiFillHome size={25} color="white" />
-      </Link>
-      <Image src={image} w="100px" h="100px" scale={2.4} />
-      <Link to="/changed">
-        <PiWarningCircleFill size={25} color="white" />
-        <Text>{lowItemsCount.length}</Text>
-      </Link>
+      <Image src={image} w="100px" h="100px" scale={1.4} />
     </Flex>
   )
 }

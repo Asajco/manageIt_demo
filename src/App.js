@@ -7,6 +7,7 @@ import Header from './components/Header'
 import Home from './components/Home'
 import { useHook } from './hooks/useFetch'
 import { Route, Routes } from 'react-router-dom'
+import Facturation from './pages/Facturation'
 function App() {
   const { loading } = useHook()
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/changed" element={<ChangedItems />} />
             <Route path="/addNew" element={<AddItemForm />} />
+            <Route path="/facturation" element={<Facturation />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </div>
