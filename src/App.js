@@ -8,6 +8,9 @@ import Home from './components/Home'
 import { useHook } from './hooks/useFetch'
 import { Route, Routes } from 'react-router-dom'
 import Facturation from './pages/Facturation'
+import Login from './pages/Login'
+import SignUp from './pages/SignUp'
+import Shifts from './pages/Shifts'
 function App() {
   const { loading } = useHook()
 
@@ -25,6 +28,10 @@ function App() {
             <Route path="/changed" element={<ChangedItems />} />
             <Route path="/addNew" element={<AddItemForm />} />
             <Route path="/facturation" element={<Facturation />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/shifts" element={<Shifts />} />
+
             <Route path="*" element={<Home />} />
           </Routes>
         </div>
