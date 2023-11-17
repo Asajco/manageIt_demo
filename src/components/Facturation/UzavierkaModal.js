@@ -88,28 +88,20 @@ const UzavierkaModal = () => {
                 </InputLeftAddon>
                 <Input
                   {...register('terminal', { required: true })}
-                  type="number"
                   mb="0.5rem"
                 />
               </InputGroup>
               {errors.terminal && <ErrorMessage text={'Vyplň terminál'} />}
-              <InputGroup>
+              <InputGroup mb="0.5rem">
                 <InputLeftAddon backgroundColor="red.300">Hry</InputLeftAddon>
-                <Input
-                  {...register('games', { required: true })}
-                  type="number"
-                />
+                <Input {...register('games', { required: true })} />
               </InputGroup>
               {errors.games && <ErrorMessage text={'Vyplň hry'} />}
               <InputGroup>
                 <InputLeftAddon backgroundColor="red.300">
                   Hotovosť
                 </InputLeftAddon>
-                <Input
-                  {...register('cash', { required: true })}
-                  type="number"
-                  mb="0.5rem"
-                />
+                <Input {...register('cash', { required: true })} mb="0.5rem" />
               </InputGroup>
               {errors.cash && <ErrorMessage text={'Vyplň hotovosť'} />}
               <InputGroup>
@@ -118,7 +110,6 @@ const UzavierkaModal = () => {
                 </InputLeftAddon>
                 <Input
                   {...register('totalInCash', { required: true })}
-                  type="number"
                   mb="0.5rem"
                 />
               </InputGroup>

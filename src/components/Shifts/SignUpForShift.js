@@ -1,7 +1,7 @@
 import { Box, Button, Text, Flex } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useFetchUser } from '../../hooks/useFetchUser'
-import { setDoc, doc, getDoc, deleteDoc } from 'firebase/firestore'
+import { setDoc, doc, getDoc, deleteDoc, collection } from 'firebase/firestore'
 
 import { db } from '../../firebase/config'
 
@@ -25,27 +25,45 @@ const SignUpForShift = () => {
   }
   const isDaySelected = (day) => selectedDays.includes(day)
 
+  const handleSendData1 = async () => {
+    setDoc(doc(collection(db, 'shifts'), 'shiftSign'), {
+      selectedDays, // Include other data in the document
+    })
+  }
   const handleSendData = async () => {
     for (const day of selectedDays) {
-      const dayDocRef = doc(db, 'shiftsSign', day)
+      const shiftsSignDocRef = doc(db, 'shifts', 'shiftsSign')
 
-      // Get the current names array
-      const dayDoc = await getDoc(dayDocRef)
-      const currentNames = dayDoc.exists() ? dayDoc.data().names : []
+      try {
+        const shiftsSignDocSnapshot = await getDoc(shiftsSignDocRef)
 
-      // Add the new name to the names array (if it's not already in the array)
-      const newName = user.name
+        if (shiftsSignDocSnapshot.exists()) {
+          const shiftsSignData = shiftsSignDocSnapshot.data()
 
-      if (!currentNames.includes(newName)) {
-        currentNames.push(newName)
+          if (!shiftsSignData[day]) {
+            shiftsSignData[day] = [] // Initialize the names array for the selected day if it doesn't exist
+          }
 
-        // Update the document with the new names array
-        await setDoc(dayDocRef, {
-          names: currentNames,
-        })
+          // Check if the user's name is already in the array, and add it if not
+          if (!shiftsSignData[day].includes(user.name)) {
+            shiftsSignData[day].push(user.name)
+          }
+
+          // Update the "shiftsSign" document in the database with the modified data
+          await setDoc(shiftsSignDocRef, shiftsSignData)
+          console.log(`Added ${user.name} to ${day}`)
+        } else {
+          // If the document doesn't exist, create it with the selected day and the user's name
+          const data = { [day]: [user.name] }
+          await setDoc(shiftsSignDocRef, data)
+          console.log(`Created and added ${user.name} to ${day}`)
+        }
+      } catch (error) {
+        console.error(`Error updating data for ${day}:`, error)
       }
     }
   }
+
   const handleDeleteData = async () => {
     for (const day of days) {
       const dayDocRef = doc(db, 'shiftsSign', day)
@@ -60,7 +78,7 @@ const SignUpForShift = () => {
   }
 
   return (
-    <Flex minH="80vh" flexDirection="column" alignItems="center">
+    <Flex flexDirection="column" alignItems="center">
       <Box>
         {days.map((item, index) => (
           <Button
