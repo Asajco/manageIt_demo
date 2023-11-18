@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { auth, db, firestore } from '../firebase/config'
 import { collection, addDoc, setDoc, doc } from 'firebase/firestore'
-
+import { useFetchUser } from '../hooks/useFetchUser'
 const AuthContext = React.createContext()
 
 export function useAuth() {
@@ -20,6 +20,7 @@ export function AuthProvider({ children }) {
     // Get the user's UID
     const uid = userCredential.user.uid
     return setDoc(doc(db, 'users', uid), {
+      id: uid,
       email: email,
       password: password,
       name: name,
@@ -29,9 +30,14 @@ export function AuthProvider({ children }) {
     return auth.signInWithEmailAndPassword(email, password)
   }
 
-  function logout() {
-    return auth.signOut()
+  async function logout() {
+    try {
+      await auth.signOut()
+    } catch (error) {
+      console.error('Error during logout:', error)
+    }
   }
+
   function resetPassword(email) {
     return auth.sendPasswordResetEmail(email)
   }

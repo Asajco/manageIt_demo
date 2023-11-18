@@ -6,6 +6,8 @@ export const useFetchUser = () => {
   const [user, setUser] = useState({
     email: '',
     id: '',
+    password: '',
+    shifts: [],
   })
   const { currentUser } = useAuth()
 
@@ -16,7 +18,8 @@ export const useFetchUser = () => {
         const userSnapshot = await getDoc(userRef)
 
         if (userSnapshot.exists()) {
-          setUser(userSnapshot.data())
+          const data = userSnapshot.data()
+          setUser(data)
         }
       }
 

@@ -17,6 +17,7 @@ const Footer = () => {
       justifyContent="space-evenly"
       position="fixed"
       bottom="0"
+      right="0"
       w="100vw"
     >
       <Link to="/">

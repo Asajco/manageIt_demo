@@ -106,7 +106,7 @@ const UzavierkaModal = () => {
               {errors.cash && <ErrorMessage text={'Vyplň hotovosť'} />}
               <InputGroup>
                 <InputLeftAddon backgroundColor="red.300">
-                  Spolu hotovosť
+                  Tržba spolu
                 </InputLeftAddon>
                 <Input
                   {...register('totalInCash', { required: true })}
@@ -114,7 +114,7 @@ const UzavierkaModal = () => {
                 />
               </InputGroup>
               {errors.totalInCash && (
-                <ErrorMessage text={'Vyplň Spolu hotovosť'} />
+                <ErrorMessage text={'Vyplň tržbu spolu'} />
               )}
               <InputGroup>
                 <InputLeftAddon backgroundColor="red.300">

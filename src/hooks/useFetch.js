@@ -53,8 +53,6 @@ export const useHook = () => {
       }
     }
     getData()
-
-    console.log(items)
   }, [])
   return {
     items,

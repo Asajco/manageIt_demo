@@ -35,9 +35,7 @@ const AddItemForm = () => {
       duration: 1000,
     })
   }
-  useEffect(() => {
-    console.log('zmenil som state')
-  }, [items])
+
   return (
     <Flex mt={20} backgroundColor="lightgrey" flexDirection="column" mb={10}>
       <form onSubmit={handleSubmit(onSubmit)}>

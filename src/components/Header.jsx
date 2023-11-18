@@ -12,13 +12,16 @@ const Header = () => {
   const image = require('../assets/break.jpeg')
 
   const { currentUser, logout } = useAuth()
-  const { user } = useFetchUser()
-  console.log(user)
+  const { user, setUser } = useFetchUser()
+
   // Update lowItemsCount whenever lowItems or items change
 
   //   let lowItemsCount =
   //     lowItems.length + items.filter((item) => item.hasBeenChanged).length
-
+  const handleLogout = () => {
+    logout()
+    setUser(null)
+  }
   return (
     <Flex
       backgroundColor="#b31b22"
@@ -38,7 +41,7 @@ const Header = () => {
           fontWeight="bold"
           fontSize="18"
         >
-          Ahoj {user.name}!
+          Ahoj {user && user.name}!
         </Text>
       ) : null}
       {!currentUser ? (
@@ -58,9 +61,12 @@ const Header = () => {
           </Button>
         </Link>
       ) : (
+        //I6LVAe20MMUNE9YmR88IG2E4yuJ3
+        //I6LVAe20MMUNE9YmR88IG2E4yuJ3
+        //I6LVAe20MMUNE9YmR88IG2E4yuJ3
         // <Button onClick={() => logout()} >Odhlásiť sa</Button>
         <Button
-          onClick={() => logout()}
+          onClick={() => handleLogout()}
           position="relative"
           mr="1rem"
           w="2.5rem"

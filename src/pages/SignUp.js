@@ -1,8 +1,17 @@
 import React, { useRef, useState } from 'react'
 import { useAuth } from '../store/authContext'
-import { useToast } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  useToast,
+} from '@chakra-ui/react'
 import { useNavigate as navigate } from 'react-router'
 import { Link } from 'react-router-dom'
+import { colors } from '../store/colors'
 const SignUp = () => {
   const emailRef = useRef(null)
   const { signup } = useAuth()
@@ -36,27 +45,50 @@ const SignUp = () => {
     }
   }
   return (
-    <div>
-      <h2>SignUp</h2>
+    <Box>
+      <Heading>Registrácia</Heading>
       {error && <div>{error}</div>}
       <form
         onSubmit={onSubmit}
-        style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem',
+          padding: '0.5rem',
+        }}
       >
-        <label>Email</label>
-        <input type="email" ref={emailRef} />
-        <label>First name</label>
-        <input type="text" ref={nameRef} />
-        <label>Password</label>
-        <input type="password" ref={passwordRef} />
-        <label>Confirm Password</label>
-        <input type="password" ref={passwordConfirmRef} />
+        <InputGroup>
+          <InputLeftAddon bg={colors.primaryBreak} color="white">
+            Email
+          </InputLeftAddon>
+          <Input type="email" ref={emailRef} />
+        </InputGroup>
+        <InputGroup>
+          <InputLeftAddon bg={colors.primaryBreak} color="white">
+            First name
+          </InputLeftAddon>
+          <Input type="text" ref={nameRef} />
+        </InputGroup>
+        <InputGroup>
+          <InputLeftAddon bg={colors.primaryBreak} color="white">
+            Password
+          </InputLeftAddon>
+          <Input type="password" ref={passwordRef} />
+        </InputGroup>
+        <InputGroup>
+          <InputLeftAddon bg={colors.primaryBreak} color="white">
+            Confirm Password
+          </InputLeftAddon>
+          <Input type="password" ref={passwordConfirmRef} />
+        </InputGroup>
         <div>
           Already have an account? <Link to="/signin">Sign In</Link>
         </div>
-        <button>SignUp</button>
+        <Button colorScheme="red" mt="1rem">
+          Vytvor účet
+        </Button>
       </form>
-    </div>
+    </Box>
   )
 }
 

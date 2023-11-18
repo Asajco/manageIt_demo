@@ -24,7 +24,7 @@ const ChangedItems = () => {
     })
   }
   let filteredItems = changedItems(items).filter((item) => item.hasBeenChanged)
-  console.log(filteredItems.length)
+
   return (
     <Box minH="70vh" fontFamily="Roboto">
       {filteredItems.length > 0 ? (

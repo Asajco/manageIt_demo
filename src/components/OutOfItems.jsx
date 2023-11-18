@@ -19,7 +19,6 @@ const OutOfItems = () => {
   } = useForm()
 
   const onSubmit = (data) => {
-    console.log(moment())
     const itemId = v4()
     if (data.name == '') {
       toast({

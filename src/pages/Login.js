@@ -1,7 +1,15 @@
 import React, { useState, useRef, FormEvent } from 'react'
 import { useAuth } from '../store/authContext'
 import { Link, useNavigate } from 'react-router-dom'
-import { useMergeRefs, useToast } from '@chakra-ui/react'
+import {
+  Button,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  useMergeRefs,
+  useToast,
+} from '@chakra-ui/react'
+import { colors } from '../store/colors'
 const Login = () => {
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
@@ -44,13 +52,28 @@ const Login = () => {
     <div>
       <form
         onSubmit={handleSubmit}
-        style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem',
+          margin: '1.5rem',
+        }}
       >
-        <label>Email</label>
-        <input type="email" ref={emailRef} />
-        <label>Password</label>
-        <input type="password" ref={passwordRef} />
-        <button disabled={loading}>Log In</button>
+        <InputGroup>
+          <InputLeftAddon bgColor={colors.primaryBreak} color="white">
+            Email
+          </InputLeftAddon>
+          <Input type="email" ref={emailRef} />
+        </InputGroup>
+        <InputGroup>
+          <InputLeftAddon bgColor={colors.primaryBreak} color="white">
+            Heslo
+          </InputLeftAddon>
+          <Input type="password" ref={passwordRef} />
+        </InputGroup>
+        <Button disabled={loading} colorScheme="red" type="submit">
+          Log In
+        </Button>
         <div>
           {/* <div>
             <Link to="/forgot-password">Forgot your password?</Link>

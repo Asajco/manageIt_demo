@@ -116,7 +116,7 @@ const Shifts = () => {
       )}
       <Box bg="white" m="0.75rem" borderRadius="0.5rem" p="1rem" mb="4rem">
         <Heading>Smeny</Heading>
-        {console.log(shifts)}
+
         {shifts ? (
           <Box>
             {Object.keys(shifts)
