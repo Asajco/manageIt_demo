@@ -7,6 +7,7 @@ export const useFetchUser = () => {
     email: '',
     id: '',
     password: '',
+
     shifts: [],
   })
   const { currentUser } = useAuth()

@@ -7,10 +7,11 @@ import { FaCalendarAlt } from 'react-icons/fa'
 import { AiFillHome } from 'react-icons/ai'
 import { useAuth } from '../store/authContext'
 import { PiWarningCircleFill } from 'react-icons/pi'
-
+import { AiFillSetting } from 'react-icons/ai'
+import { useFetchUser } from '../hooks/useFetchUser'
 const Footer = () => {
   const { currentUser } = useAuth()
-
+  const { user } = useFetchUser()
   return (
     <Flex
       backgroundColor="#b31b22"
@@ -40,6 +41,11 @@ const Footer = () => {
           <Link to="/profile">
             <FaPerson size={25} color="white" />
           </Link>
+          {user && user.isSuperAdmin && (
+            <Link to="/sign-up">
+              <AiFillSetting size={25} color="white" />
+            </Link>
+          )}
         </>
       ) : (
         <Text color="white">Created by Break Bar</Text>

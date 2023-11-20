@@ -84,7 +84,7 @@ const SignUp = () => {
         <div>
           Already have an account? <Link to="/signin">Sign In</Link>
         </div>
-        <Button colorScheme="red" mt="1rem">
+        <Button colorScheme="red" mt="1rem" type="submit">
           Vytvor účet
         </Button>
       </form>
