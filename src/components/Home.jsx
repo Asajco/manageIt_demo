@@ -43,7 +43,7 @@ const Home = () => {
   }
 
   return (
-    <Box p={3} minHeight="70.5vh" color="black">
+    <Box p={13} maxHeight="70.5vh" color="black" mb="4rem">
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{

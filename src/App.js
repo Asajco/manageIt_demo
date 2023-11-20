@@ -6,19 +6,24 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import Home from './components/Home'
 import { useHook } from './hooks/useFetch'
+import { useAuth } from './store/authContext'
 import { Route, Routes } from 'react-router-dom'
 import Facturation from './pages/Facturation'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import Shifts from './pages/Shifts'
 import Profile from './pages/Profile'
+import InitalLogin from './pages/InitalLogin'
 function App() {
   const { loading } = useHook()
+  const { currentUser } = useAuth()
 
   return (
     <div className="App">
       <Header />
-      {loading ? (
+      {!currentUser ? (
+        <Login h="4rem" />
+      ) : loading ? (
         <Box h="80vh">
           <Text fontFamily="Poppins">Načítavam...</Text>
         </Box>
@@ -33,10 +38,12 @@ function App() {
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/shifts" element={<Shifts />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/inital-login" element={<Login />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </div>
       )}
+
       <Footer />
     </div>
   )
