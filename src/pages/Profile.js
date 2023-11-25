@@ -1,19 +1,48 @@
 import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useFetchUser } from '../hooks/useFetchUser'
 import { useAuth } from '../store/authContext'
 import moment from 'moment'
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase/config'
+import { useTimer } from '../store/TimeContext'
 const Profile = () => {
   const { currentUser } = useAuth()
   const { user, setUser } = useFetchUser()
 
-  const [isRunning, setIsRunning] = useState(false)
-  const [startDate, setStartDate] = useState(null)
-  const [elapsedTime, setElapsedTime] = useState(0)
+  const { elapsedTime, setElapsedTime, isRunning, setIsRunning } = useTimer()
+  //   const [isRunning, setIsRunning] = useState(false)
+  //   const [startDate, setStartDate] = useState(null)
+  //   const [elapsedTime, setElapsedTime] = useState(0)
   const intervalRef = useRef()
+  const savedStartTime = localStorage.getItem('startTime')
+  const savedElapsedTime = localStorage.getItem('elapsedTime')
 
+  // Initialize state with saved or default values
+  const [startDate, setStartDate] = useState(
+    savedStartTime ? parseInt(savedStartTime) : null,
+  )
+  //   const [elapsedTime, setElapsedTime] = useState(
+  //     savedElapsedTime ? parseInt(savedElapsedTime) : 0,
+  //   )
+  useEffect(() => {
+    const savedStartTime = localStorage.getItem('startTime')
+
+    if (savedStartTime && isRunning) {
+      const savedElapsedTime = localStorage.getItem('elapsedTime') || 0
+      const startTime = Date.now() - parseInt(savedElapsedTime, 10)
+
+      intervalRef.current = setInterval(() => {
+        setElapsedTime(Date.now() - startTime)
+      }, 100)
+
+      //   setIsRunning(true)
+    }
+    console.log(isRunning)
+    return () => {
+      clearInterval(intervalRef.current)
+    }
+  }, [setElapsedTime, setIsRunning])
   const startStopwatch = () => {
     if (isRunning) {
       clearInterval(intervalRef.current)
@@ -23,7 +52,11 @@ const Profile = () => {
         setElapsedTime(Date.now() - startTime)
       }, 100)
     }
-    setStartDate(moment().valueOf())
+
+    // Save start time to local storage
+    setStartDate(Date.now())
+    localStorage.setItem('startTime', Date.now().toString())
+
     setIsRunning(!isRunning)
   }
 
@@ -31,6 +64,10 @@ const Profile = () => {
     clearInterval(intervalRef.current)
     setIsRunning(false)
     setElapsedTime(0)
+
+    // Clear saved timer data from local storage
+    localStorage.removeItem('startTime')
+    localStorage.removeItem('elapsedTime')
   }
 
   const formatTime = (milliseconds) => {
@@ -62,7 +99,8 @@ const Profile = () => {
       ...userDoc.data(),
       shifts: updatedShifts,
     })
-
+    localStorage.removeItem('startTime')
+    localStorage.removeItem('elapsedTime')
     console.log('Shift saved successfully!')
   }
 
@@ -70,7 +108,7 @@ const Profile = () => {
     <Flex justifyContent="center" alignItems="center" fontFamily="Roboto">
       {currentUser ? (
         <Flex flexDirection="column" alignItems="center">
-          <Flex flexDirection="column" alignItems="center" gap={2}>
+          {/* <Flex flexDirection="column" alignItems="center" gap={2}>
             <Flex
               w="10rem"
               h="5rem"
@@ -117,7 +155,8 @@ const Profile = () => {
                     <b>{moment(Number(day)).format('DD. MM. YYYY')}</b> - {time}
                   </Text>
                 ))}
-          </Flex>
+          </Flex> */}
+          <Text>Na tomto sa stále pracuje</Text>
         </Flex>
       ) : (
         <Box>

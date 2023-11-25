@@ -5,6 +5,7 @@ import App from './App'
 import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react'
 import { AuthProvider } from './store/authContext'
 import { BrowserRouter, HashRouter } from 'react-router-dom'
+import { TimerProvider } from './store/TimeContext'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 const config = {
   initialColorMode: 'light',
@@ -14,12 +15,14 @@ const theme = extendTheme({ config })
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <ChakraProvider theme={theme}>
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <HashRouter>
-          <App />
-        </HashRouter>
-      </ChakraProvider>
+      <TimerProvider>
+        <ChakraProvider theme={theme}>
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+          <HashRouter>
+            <App />
+          </HashRouter>
+        </ChakraProvider>
+      </TimerProvider>
     </AuthProvider>
   </React.StrictMode>,
 )

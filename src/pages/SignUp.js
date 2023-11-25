@@ -65,25 +65,23 @@ const SignUp = () => {
         </InputGroup>
         <InputGroup>
           <InputLeftAddon bg={colors.primaryBreak} color="white">
-            First name
+            Meno
           </InputLeftAddon>
           <Input type="text" ref={nameRef} />
         </InputGroup>
         <InputGroup>
           <InputLeftAddon bg={colors.primaryBreak} color="white">
-            Password
+            Heslo
           </InputLeftAddon>
           <Input type="password" ref={passwordRef} />
         </InputGroup>
         <InputGroup>
           <InputLeftAddon bg={colors.primaryBreak} color="white">
-            Confirm Password
+            Potvrdenie hesla
           </InputLeftAddon>
           <Input type="password" ref={passwordConfirmRef} />
         </InputGroup>
-        <div>
-          Already have an account? <Link to="/signin">Sign In</Link>
-        </div>
+
         <Button colorScheme="red" mt="1rem" type="submit">
           Vytvor účet
         </Button>

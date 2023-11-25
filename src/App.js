@@ -14,6 +14,7 @@ import SignUp from './pages/SignUp'
 import Shifts from './pages/Shifts'
 import Profile from './pages/Profile'
 import InitalLogin from './pages/InitalLogin'
+import Settings from './pages/Settings'
 function App() {
   const { loading } = useHook()
   const { currentUser } = useAuth()
@@ -38,6 +39,7 @@ function App() {
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/shifts" element={<Shifts />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="/inital-login" element={<Login />} />
             <Route path="*" element={<Home />} />
           </Routes>

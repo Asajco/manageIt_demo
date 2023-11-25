@@ -42,7 +42,7 @@ const Footer = () => {
             <FaPerson size={25} color="white" />
           </Link>
           {user && user.isSuperAdmin && (
-            <Link to="/sign-up">
+            <Link to="/settings">
               <AiFillSetting size={25} color="white" />
             </Link>
           )}
