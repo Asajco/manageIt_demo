@@ -82,9 +82,8 @@ const Header = () => {
         //     style={{ position: 'absolute', fontWeight: 'bold' }}
         //   />
         // </Button>
-        <></>
+        <Sidebar isOpen={isOpen} />
       )}
-      <Sidebar isOpen={isOpen} />
     </Flex>
   )
 }
