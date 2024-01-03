@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { collection, getDocs, getDoc, doc } from 'firebase/firestore'
 import { db } from '../firebase/config'
 
@@ -10,6 +10,7 @@ export const useHook = () => {
   const [shifts, setShifts] = useState([])
   const [shiftsSign, setShiftsSign] = useState([])
   const [loading, setLoading] = useState(false)
+  const [workTime, setWorkTime] = useState()
 
   useEffect(() => {
     const getData = async () => {
@@ -20,6 +21,10 @@ export const useHook = () => {
         const uzavierkySnapshot = await getDocs(collection(db, 'uzavierky'))
         const shiftsSignSnapshot = await getDoc(doc(db, 'shifts', 'shiftsSign'))
         const shiftsSnapshot = await getDoc(doc(db, 'shifts', 'shifts'))
+        const workTimeSnapshot = await getDoc(
+          doc(db, 'shifts', 'finishedShifts'),
+        )
+
         const itemData = querySnapshot.docs.map((doc) => {
           const data = doc.data()
           // Parse the count property to ensure it's a number
@@ -35,6 +40,10 @@ export const useHook = () => {
         if (shiftsSnapshot.exists()) {
           const shiftsData = shiftsSnapshot.data()
           setShifts(shiftsData)
+        }
+        if (workTimeSnapshot.exists()) {
+          const workTimeData = workTimeSnapshot.data()
+          setWorkTime(workTimeData)
         } else {
           console.log('Collection does not exist')
         }
@@ -48,6 +57,8 @@ export const useHook = () => {
         const changedItems = itemData.filter((item) => item.hasBeenChanged)
         setLowItemsCount([...lowItemsData, ...changedItems])
         setLoading(false)
+        console.log(workTime)
+        console.log('fetch')
       } catch (error) {
         console.log(error)
       }
@@ -66,6 +77,8 @@ export const useHook = () => {
     shiftsSign,
     shifts,
     setShifts,
+    workTime,
+    setWorkTime,
     setShiftsSign,
     lowItemsCount,
   }

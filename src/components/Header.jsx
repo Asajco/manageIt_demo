@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, Text, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../store/authContext'
 import { useHook } from '../hooks/useFetch'
@@ -7,10 +7,11 @@ import { Link } from 'react-router-dom'
 import { useFetchUser } from '../hooks/useFetchUser'
 import { CiLogout } from 'react-icons/ci'
 import { IoLogIn } from 'react-icons/io5'
+import Sidebar from './Sidebar'
 
 const Header = () => {
   const image = require('../assets/break.jpeg')
-
+  const { isOpen, onOpen, onClose } = useDisclosure() // Use useDisclosure
   const { currentUser, logout } = useAuth()
   const { user, setUser } = useFetchUser()
 
@@ -31,7 +32,9 @@ const Header = () => {
       alignItems="center"
       position="relative"
     >
-      <Image src={image} w="100px" h="100px" scale={1.4} />
+      <Link to="/">
+        <Image src={image} w="100px" h="100px" scale={1.4} />
+      </Link>
       {currentUser ? (
         <Text
           color="white"
@@ -65,21 +68,23 @@ const Header = () => {
         //I6LVAe20MMUNE9YmR88IG2E4yuJ3
         //I6LVAe20MMUNE9YmR88IG2E4yuJ3
         // <Button onClick={() => logout()} >Odhlásiť sa</Button>
-        <Button
-          onClick={() => handleLogout()}
-          position="relative"
-          mr="1rem"
-          w="2.5rem"
-          h="2.5rem"
-          p="-1rem"
-          borderRadius="50px"
-        >
-          <CiLogout
-            size={25}
-            style={{ position: 'absolute', fontWeight: 'bold' }}
-          />
-        </Button>
+        // <Button
+        //   onClick={() => handleLogout()}
+        //   position="relative"
+        //   mr="1rem"
+        //   w="2.5rem"
+        //   h="2.5rem"
+        //   p="-1rem"
+        //   borderRadius="50px"
+        // >
+        //   <CiLogout
+        //     size={25}
+        //     style={{ position: 'absolute', fontWeight: 'bold' }}
+        //   />
+        // </Button>
+        <></>
       )}
+      <Sidebar isOpen={isOpen} />
     </Flex>
   )
 }

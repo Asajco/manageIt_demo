@@ -1,23 +1,55 @@
 import React, { useState } from 'react'
 import SignUpForShift from '../components/Shifts/SignUpForShift'
-import { Button, Box, Text, Heading, Input } from '@chakra-ui/react'
+import {
+  Button,
+  Box,
+  Text,
+  Heading,
+  Input,
+  Flex,
+  InputGroup,
+  useToast,
+  InputLeftAddon,
+} from '@chakra-ui/react'
 import { useHook } from '../hooks/useFetch'
-import { collection, doc, setDoc, getDoc } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+} from 'firebase/firestore'
 import { db } from '../firebase/config'
+import moment from 'moment'
 import { useFetchUser } from '../hooks/useFetchUser'
 const Shifts = () => {
   const [toggleForm, setToggleForm] = useState(false)
-  const { shiftsSign, shifts } = useHook()
+  const { shiftsSign, shifts, workTime, setWorkTime } = useHook()
+  const [shiftDate, setShiftDate] = useState(null)
   const [timeInput, setTimeInput] = useState(null)
   const { user } = useFetchUser()
   const [selectedNames, setSelectedNames] = useState({})
+  const toast = useToast()
+  const [inputs, setInputs] = useState([
+    { name: '', time: '' }, // Initial input fields
+  ])
+
+  const handleAddInput = () => {
+    setInputs([...inputs, { name: '', time: '' }])
+  }
   const handleNameClick = (name, day) => {
     setSelectedNames((prevSelectedNames) => {
-      const isNameSelected = (prevSelectedNames[day] || []).includes(name)
+      const isNameSelected = (
+        prevSelectedNames[day]?.map((item) => item.name) || []
+      ).includes(name)
 
       if (isNameSelected) {
         // Remove the name from the selected names for the day
-        const updatedNames = prevSelectedNames[day].filter((n) => n !== name)
+        const updatedNames = prevSelectedNames[day]
+          .map((item) => item.name)
+          .filter((n) => n !== name)
+        console.log('pice')
         return {
           ...prevSelectedNames,
           [day]: updatedNames,
@@ -39,6 +71,13 @@ const Shifts = () => {
     setDoc(doc(collection(db, 'shifts'), 'shifts'), {
       ...selectedNames, // Include other data in the document
     })
+    toast({
+      title: `Shifts were succesfully submited`,
+      status: 'success',
+      position: 'top-right',
+      duration: '1000',
+      isClosable: true,
+    })
   }
   const handleSubmitTime = async (day, name, time) => {
     try {
@@ -59,6 +98,13 @@ const Shifts = () => {
         })
 
         console.log(`Time for ${name} on ${day} submitted successfully.`)
+        toast({
+          title: `Time for ${name} was succesfully submited`,
+          status: 'success',
+          position: 'top-right',
+          duration: '1000',
+          isClosable: true,
+        })
       } else {
         console.error(`Error: Day ${day} not found in the shifts document.`)
       }
@@ -67,6 +113,34 @@ const Shifts = () => {
     }
   }
 
+  const handleSubmitShifts = async () => {
+    const data = { ...inputs }
+    const date = moment().valueOf()
+    const shiftDocRef = doc(collection(db, 'shifts'), 'finishedShifts')
+    await updateDoc(shiftDocRef, {
+      [date]: data,
+    })
+    setWorkTime((prevWorkTime) => ({
+      ...prevWorkTime,
+      [date]: data,
+    }))
+    console.log(workTime)
+  }
+  const handleDeleteShifts = async () => {
+    try {
+      const dayDocRef = doc(collection(db, 'shifts'), 'shifts')
+      await deleteDoc(dayDocRef)
+      toast({
+        title: 'Shifts succesfully deleted',
+        position: 'top-right',
+        status: 'info',
+        duration: '1000',
+        isClosable: true,
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
   if (!shiftsSign || shiftsSign.length === 0) {
     return (
       <Box minH="80vh">
@@ -88,7 +162,7 @@ const Shifts = () => {
             .map((day) => (
               <Box key={day} m="1rem">
                 <Text>{day}</Text>
-
+                {console.log(selectedNames[day]?.map((item) => item.name))}
                 <Text>
                   {shiftsSign[day].map((name) => (
                     <Text
@@ -97,8 +171,10 @@ const Shifts = () => {
                       cursor="pointer"
                       _hover={{ color: 'blue.500' }}
                       color={
-                        (selectedNames[day] || []).includes(name)
-                          ? 'blue.500'
+                        (
+                          selectedNames[day]?.map((item) => item.name) || []
+                        ).includes(name)
+                          ? 'red'
                           : 'inherit'
                       }
                     >
@@ -109,16 +185,39 @@ const Shifts = () => {
                 {/*  */}
               </Box>
             ))}
-          <Button onClick={() => handleSaveData()} colorScheme="red">
-            Potvrdiť smeny
-          </Button>
+          <Flex
+            gap="0.5rem"
+            flexDirection="column"
+            justifyContent="center"
+            p="2rem"
+          >
+            <Button onClick={() => handleSaveData()} colorScheme="green">
+              Potvrdiť smeny
+            </Button>
+            <Button onClick={() => handleDeleteShifts()} colorScheme="red">
+              Delete shifts
+            </Button>
+          </Flex>
         </Box>
       )}
-      <Box bg="white" m="0.75rem" borderRadius="0.5rem" p="1rem" mb="4rem">
+      <Box
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        bg="white"
+        m="0.75rem"
+        borderRadius="0.5rem"
+        p="1rem"
+        mb="4rem"
+      >
         <Heading>Smeny</Heading>
 
         {shifts ? (
-          <Box>
+          <Flex
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+          >
             {Object.keys(shifts)
               .sort()
               .map((day) => (
@@ -127,7 +226,11 @@ const Shifts = () => {
 
                   <Text>
                     {shifts[day].map((item) => (
-                      <Box>
+                      <Box
+                        alignItems="center"
+                        justifyContent="center"
+                        w="20rem"
+                      >
                         <Text key={item.name}>
                           {item.name} {item.time && item.time}
                         </Text>
@@ -139,7 +242,7 @@ const Shifts = () => {
                               placeholder="Čas"
                               onChange={(e) => setTimeInput(e.target.value)}
                               m="0.5rem"
-                              w="50%"
+                              w="10rem"
                             />
                             <Button
                               onClick={() =>
@@ -156,11 +259,61 @@ const Shifts = () => {
                   </Text>
                 </Box>
               ))}
-          </Box>
+          </Flex>
         ) : (
           <Text>Smeny ešte neboli vytvorené</Text>
         )}
       </Box>
+      {user.isSuperAdmin && (
+        <Box
+          mb={300}
+          gap={10}
+          backgroundColor="white"
+          p="1rem"
+          m="0.75rem"
+          borderRadius="0.5rem"
+          fontFamily="Poppins"
+        >
+          <Heading fontFamily="Poppins">Smena v daný deň</Heading>
+          {inputs.map((input, index) => (
+            <div key={index}>
+              <InputGroup mt="0.5rem" mb="0.5rem">
+                <InputLeftAddon>Meno</InputLeftAddon>
+                <Input
+                  type="text"
+                  placeholder="Meno"
+                  value={input.name}
+                  onChange={(e) => {
+                    const newInputs = [...inputs]
+                    newInputs[index].name = e.target.value
+                    setInputs(newInputs)
+                  }}
+                />
+              </InputGroup>
+              <InputGroup>
+                <InputLeftAddon>Čas</InputLeftAddon>
+                <Input
+                  type="number"
+                  placeholder="Time"
+                  value={input.time}
+                  onChange={(e) => {
+                    const newInputs = [...inputs]
+                    newInputs[index].time = e.target.value
+                    setInputs(newInputs)
+                  }}
+                />
+              </InputGroup>
+            </div>
+          ))}
+          <Box mt="1rem" gap="1rem">
+            <Button onClick={handleAddInput} mr="1rem">
+              Pridať osobu
+            </Button>
+
+            <Button onClick={() => handleSubmitShifts()}>Uložit</Button>
+          </Box>
+        </Box>
+      )}
     </Box>
   )
 }

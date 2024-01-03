@@ -1,4 +1,4 @@
-import { Box, Button, Text, Flex } from '@chakra-ui/react'
+import { Box, Button, Text, Flex, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useFetchUser } from '../../hooks/useFetchUser'
 import { setDoc, doc, getDoc, deleteDoc, collection } from 'firebase/firestore'
@@ -9,7 +9,7 @@ const days = ['Nedeľa', 'Pondelok', 'Utorok', 'Streda', 'Stvrtok']
 
 const SignUpForShift = () => {
   const [selectedDays, setSelectedDays] = useState([])
-
+  const toast = useToast()
   const { user } = useFetchUser()
 
   const toggleDay = (item) => {
@@ -51,6 +51,14 @@ const SignUpForShift = () => {
 
           // Update the "shiftsSign" document in the database with the modified data
           await setDoc(shiftsSignDocRef, shiftsSignData)
+          toast({
+            title: `Succesfuly logged to the shifts`,
+            status: 'success',
+            position: 'top-right',
+            duration: '1000',
+            isClosable: true,
+          })
+
           console.log(`Added ${user.name} to ${day}`)
         } else {
           // If the document doesn't exist, create it with the selected day and the user's name
@@ -66,7 +74,9 @@ const SignUpForShift = () => {
 
   const handleDeleteData = async () => {
     for (const day of days) {
-      const dayDocRef = doc(db, 'shiftsSign', day)
+      const dayDocRef = doc(collection(db, 'shifts'), 'shiftsSign')
+
+      // const dayDocRef = doc(db, 'shiftsSign', day)
 
       try {
         await deleteDoc(dayDocRef)

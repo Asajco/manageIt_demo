@@ -15,8 +15,8 @@ const Footer = () => {
   return (
     <Flex
       backgroundColor="#b31b22"
-      h="4rem"
-      mt={4}
+      h="3rem"
+      mt={40}
       alignItems="center"
       justifyContent="space-evenly"
       position="fixed"
