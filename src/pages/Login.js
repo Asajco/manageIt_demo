@@ -71,7 +71,7 @@ const Login = () => {
           </InputLeftAddon>
           <Input type="password" ref={passwordRef} />
         </InputGroup>
-        <Button disabled={loading} colorScheme="red" type="submit">
+        <Button disabled={loading} colorScheme="green" type="submit">
           Log In
         </Button>
         <div>
