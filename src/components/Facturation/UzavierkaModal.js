@@ -45,7 +45,7 @@ const UzavierkaModal = () => {
     })
 
     toast({
-      title: 'Úspešné vytvorenie uzávierky',
+      title: 'Successful creation of the shutter',
       status: 'success',
       duration: 5000,
       position: 'top-right',
@@ -61,19 +61,28 @@ const UzavierkaModal = () => {
 
   return (
     <Box>
-      <Button onClick={onOpen} colorScheme="red" size="lg" m={3} w="10rem">
-        Pridať
+      <Button
+        onClick={onOpen}
+        colorScheme="green"
+        size="lg"
+        m={3}
+        w="10rem"
+        mt="2rem"
+      >
+        Add
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader alignSelf="center">Uzavierka</ModalHeader>
-          <ModalCloseButton colorScheme="red" />
+          <ModalHeader alignSelf="center">Shutter</ModalHeader>
+          <ModalCloseButton colorScheme="green" />
           <ModalBody gap={2}>
             <form onSubmit={handleSubmit(onSubmit)} style={{ gap: '1.5rem' }}>
               <InputGroup>
-                <InputLeftAddon backgroundColor="red.300">Dátum</InputLeftAddon>
+                <InputLeftAddon backgroundColor="green.300">
+                  Date
+                </InputLeftAddon>
                 <Input
                   {...register('date', { required: true })}
                   type="date"
@@ -81,44 +90,44 @@ const UzavierkaModal = () => {
                   mb="0.5rem"
                 />
               </InputGroup>
-              {errors.date && <ErrorMessage text={'Vyplň dátum'} />}
+              {errors.date && <ErrorMessage text={'Fill date'} />}
               <InputGroup>
-                <InputLeftAddon backgroundColor="red.300">
-                  Terminál
+                <InputLeftAddon backgroundColor="green.300">
+                  Terminal
                 </InputLeftAddon>
                 <Input
                   {...register('terminal', { required: true })}
                   mb="0.5rem"
                 />
               </InputGroup>
-              {errors.terminal && <ErrorMessage text={'Vyplň terminál'} />}
+              {errors.terminal && <ErrorMessage text={'Fill terminal'} />}
               <InputGroup mb="0.5rem">
-                <InputLeftAddon backgroundColor="red.300">Hry</InputLeftAddon>
+                <InputLeftAddon backgroundColor="green.300">
+                  Games
+                </InputLeftAddon>
                 <Input {...register('games', { required: true })} />
               </InputGroup>
-              {errors.games && <ErrorMessage text={'Vyplň hry'} />}
+              {errors.games && <ErrorMessage text={'Fill games'} />}
               <InputGroup>
-                <InputLeftAddon backgroundColor="red.300">
-                  Hotovosť
+                <InputLeftAddon backgroundColor="green.300">
+                  Cash
                 </InputLeftAddon>
                 <Input {...register('cash', { required: true })} mb="0.5rem" />
               </InputGroup>
-              {errors.cash && <ErrorMessage text={'Vyplň hotovosť'} />}
+              {errors.cash && <ErrorMessage text={'Fill cash'} />}
               <InputGroup>
-                <InputLeftAddon backgroundColor="red.300">
-                  Tržba spolu
+                <InputLeftAddon backgroundColor="green.300">
+                  Together
                 </InputLeftAddon>
                 <Input
                   {...register('totalInCash', { required: true })}
                   mb="0.5rem"
                 />
               </InputGroup>
-              {errors.totalInCash && (
-                <ErrorMessage text={'Vyplň tržbu spolu'} />
-              )}
+              {errors.totalInCash && <ErrorMessage text={'Fill together'} />}
               <InputGroup>
-                <InputLeftAddon backgroundColor="red.300">
-                  Spolu v kasičke
+                <InputLeftAddon backgroundColor="green.300">
+                  Together in cashier
                 </InputLeftAddon>
                 <Input
                   {...register('totalInCashier', { required: true })}
@@ -126,15 +135,17 @@ const UzavierkaModal = () => {
                 />
               </InputGroup>
               {errors.totalInCashier && (
-                <ErrorMessage text={'Vyplň Spolu v kasičke'} />
+                <ErrorMessage text={'Fill Together in cashier'} />
               )}
-              <Input type="submit" />
+              <Button type="submit" w="100%" colorScheme="green" mt="1em">
+                Save
+              </Button>
             </form>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={onClose}>
-              Zatvoriť
+            <Button colorScheme="green" mr={3} onClick={onClose}>
+              Close
             </Button>
           </ModalFooter>
         </ModalContent>

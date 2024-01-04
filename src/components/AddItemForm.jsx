@@ -15,7 +15,7 @@ import {
 
 import { useHook } from '../hooks/useFetch'
 import { category } from '../enums/category'
-import { colors } from '../store/colors'
+import { colours } from '../store/colors'
 const AddItemForm = () => {
   const { items, setItems } = useHook()
   const toast = useToast()
@@ -57,39 +57,39 @@ const AddItemForm = () => {
         }}
       >
         <InputGroup>
-          <InputLeftAddon backgroundColor={colors.primaryBreak} color="white">
-            Názov
+          <InputLeftAddon backgroundColor={colours.primaryColor} color="white">
+            Name
           </InputLeftAddon>
           <Input {...register('name')} />
         </InputGroup>
         <InputGroup>
-          <InputLeftAddon backgroundColor={colors.primaryBreak} color="white">
-            Druh
+          <InputLeftAddon backgroundColor={colours.primaryColor} color="white">
+            Category
           </InputLeftAddon>
           <Select {...register('category')}>
             <option value="rum">Rum</option>
             <option value="vodka">Vodka</option>
-            <option value="likery">Likéry</option>
+            <option value="likery">Liquor</option>
             <option value="whiskey">Whiskey</option>
-            <option value="destilaty">Destiláty</option>
-            <option value="nealko">Nealko</option>
-            <option value="pivo">Pivo</option>
-            <option value="vino">Víno</option>
-            <option value="other">Ostatný alkohol</option>
+            <option value="destilaty">Destilates</option>
+            <option value="nealko">Non Alkoholic</option>
+            <option value="pivo">Beer</option>
+            <option value="vino">Wine</option>
+            <option value="other">Another alcohol</option>
           </Select>
         </InputGroup>
         <InputGroup>
-          <InputLeftAddon backgroundColor={colors.primaryBreak} color="white">
-            Počet
+          <InputLeftAddon backgroundColor={colours.primaryColor} color="white">
+            Count
           </InputLeftAddon>
           <Input {...register('count')} type="number" />
         </InputGroup>
         <Button
           type="submit"
-          backgroundColor={colors.primaryBreak}
+          backgroundColor={colours.primaryColor}
           color="white"
         >
-          Uložiť
+          Save
         </Button>
       </form>
     </Flex>

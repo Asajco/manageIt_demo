@@ -1,3 +1,4 @@
-export const colors = {
-  primaryBreak: '#b31b22',
+export const colours = {
+  primaryColor: '#34cb91',
+  secondaryColor: '#CB346E',
 }

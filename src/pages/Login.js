@@ -9,7 +9,7 @@ import {
   useMergeRefs,
   useToast,
 } from '@chakra-ui/react'
-import { colors } from '../store/colors'
+import { colours } from '../store/colors'
 const Login = () => {
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
@@ -31,7 +31,7 @@ const Login = () => {
       )
       if (loginResult) {
         toast({
-          title: 'Úspešné prihlásenie',
+          title: 'Succesfuly logged in',
           status: 'success',
           position: 'top-right',
           isClosable: true,
@@ -60,14 +60,14 @@ const Login = () => {
         }}
       >
         <InputGroup>
-          <InputLeftAddon bgColor={colors.primaryBreak} color="white">
+          <InputLeftAddon bgColor={colours.primaryColor} color="white">
             Email
           </InputLeftAddon>
           <Input type="email" ref={emailRef} />
         </InputGroup>
         <InputGroup>
-          <InputLeftAddon bgColor={colors.primaryBreak} color="white">
-            Heslo
+          <InputLeftAddon bgColor={colours.primaryColor} color="white">
+            Password
           </InputLeftAddon>
           <Input type="password" ref={passwordRef} />
         </InputGroup>

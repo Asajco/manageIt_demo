@@ -7,6 +7,7 @@ import { db } from '../firebase/config'
 import { v4 } from 'uuid'
 import { BsFillTrash3Fill } from 'react-icons/bs'
 import moment from 'moment'
+import { colours } from '../store/colors'
 const OutOfItems = () => {
   const { lowItems, setLowItems } = useHook()
   const toast = useToast()
@@ -60,21 +61,23 @@ const OutOfItems = () => {
   }
   return (
     <Flex flexDirection="column" p={3} mt={4} fontFamily="Roboto">
-      <Heading fontFamily="Roboto" fontSize="1.4rem">
-        Dochádzajúci tovar
+      <Heading fontFamily="Roboto" fontSize="1.3rem">
+        Low state of items
       </Heading>
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{
-          backgroundColor: 'white',
           borderRadius: '0.2rem',
           padding: '0.5rem',
           marginBottom: '2rem',
         }}
       >
-        <Input {...register('name')} placeholder="Tovar, ktorý dochádza" />
-        <Button type="submit" colorScheme="red" m={3}>
-          Pridať
+        <Input
+          {...register('name')}
+          placeholder="Items that will be missing soon"
+        />
+        <Button type="submit" bg={colours.primaryColor} m={3}>
+          Add
         </Button>
       </form>
       <Flex flexDirection="column">
@@ -83,7 +86,6 @@ const OutOfItems = () => {
               <Flex
                 key={index}
                 alignItems="center"
-                backgroundColor="white"
                 flexDirection="row"
                 w="100%"
                 p={2}
@@ -95,6 +97,7 @@ const OutOfItems = () => {
 
                 <BsFillTrash3Fill
                   size={20}
+                  cursor="pointer"
                   onClick={() => handleDeleteItem(item.id)}
                 />
               </Flex>

@@ -36,14 +36,14 @@ const Facturation = () => {
     <Box w="100vw" minH="100vh">
       <UzavierkaModal isOpen={isOpen} />{' '}
       <TableContainer w="100vw">
-        <Table variant="simple" colorScheme="red">
+        <Table variant="simple" colorScheme="green">
           <Thead>
-            <StyledTh ml="2rem">Dátum</StyledTh>
-            <StyledTh>Terminál</StyledTh>
-            <StyledTh>Hry</StyledTh>
-            <StyledTh>Hotovosť</StyledTh>
-            <StyledTh>Tržba spolu</StyledTh>
-            <StyledTh>Spolu v kasičke</StyledTh>
+            <StyledTh ml="2rem">Date</StyledTh>
+            <StyledTh>Terminal</StyledTh>
+            <StyledTh>Games</StyledTh>
+            <StyledTh>Cash</StyledTh>
+            <StyledTh>Total</StyledTh>
+            <StyledTh>Total in cashier</StyledTh>
           </Thead>
           <Tbody w="100%">
             {sortedUzavierky.reverse().map((uzavierka, index) => (

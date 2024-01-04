@@ -1,6 +1,6 @@
 {
-  "homepage": "https://Asajco.github.io/break-inventory",
-  "name": "break_inventory_web",
+  "homepage": "https://Asajco.github.io/manageIT_demo",
+  "name": "manageIT",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

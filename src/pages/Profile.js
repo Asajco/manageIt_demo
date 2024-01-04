@@ -24,7 +24,6 @@ const Profile = () => {
             {userWorkHours?.map((day) => (
               <Flex
                 m="0.5rem"
-                backgroundColor="lightgrey"
                 borderRadius="0.3rem"
                 p="0.5rem"
                 textAlign="center"
@@ -43,7 +42,7 @@ const Profile = () => {
         </Flex>
       ) : (
         <Box>
-          <Text>Pre pračovanie sa prihlás</Text>
+          <Text>Log in before entering this page</Text>
         </Box>
       )}
     </Flex>

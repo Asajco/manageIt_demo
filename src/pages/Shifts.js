@@ -49,7 +49,7 @@ const Shifts = () => {
         const updatedNames = prevSelectedNames[day]
           .map((item) => item.name)
           .filter((n) => n !== name)
-        console.log('pice')
+
         return {
           ...prevSelectedNames,
           [day]: updatedNames,
@@ -117,15 +117,24 @@ const Shifts = () => {
     const data = { ...inputs }
     const date = moment().valueOf()
     const shiftDocRef = doc(collection(db, 'shifts'), 'finishedShifts')
-    await updateDoc(shiftDocRef, {
-      [date]: data,
-    })
+    const docSnapshot = await getDoc(shiftDocRef)
+
+    if (docSnapshot.exists()) {
+      await updateDoc(shiftDocRef, {
+        [date]: data,
+      })
+    } else {
+      await setDoc(shiftDocRef, {
+        [date]: data,
+      })
+    }
+
     setWorkTime((prevWorkTime) => ({
       ...prevWorkTime,
       [date]: data,
     }))
-    console.log(workTime)
   }
+
   const handleDeleteShifts = async () => {
     try {
       const dayDocRef = doc(collection(db, 'shifts'), 'shifts')
@@ -141,28 +150,28 @@ const Shifts = () => {
       console.log(e)
     }
   }
-  if (!shiftsSign || shiftsSign.length === 0) {
-    return (
-      <Box minH="80vh">
-        <Text>Načítavam..</Text>
-        {toggleForm && <SignUpForShift />}
-      </Box>
-    )
-  }
+  // if (!shiftsSign || shiftsSign.length === 0) {
+  //   return (
+  //     <Box minH="80vh">
+  //       <Text>Načítavam..</Text>
+  //       {toggleForm && <SignUpForShift />}
+  //     </Box>
+  //   )
+  // }
   return (
     <Box minH="80vh" fontFamily="Roboto">
       <Button onClick={() => setToggleForm(!toggleForm)} mt="1rem">
-        {toggleForm ? 'X' : 'Prihlásiť sa na smenu'}
+        {toggleForm ? 'X' : 'Sign up for shifts'}
       </Button>
       {toggleForm && <SignUpForShift />}
-      {shiftsSign && user.email === 'petergacj@gmail.com' && (
+      {shiftsSign && user.isSuperAdmin && (
         <Box>
           {Object.keys(shiftsSign)
             .sort()
             .map((day) => (
               <Box key={day} m="1rem">
                 <Text>{day}</Text>
-                {console.log(selectedNames[day]?.map((item) => item.name))}
+
                 <Text>
                   {shiftsSign[day].map((name) => (
                     <Text
@@ -192,7 +201,7 @@ const Shifts = () => {
             p="2rem"
           >
             <Button onClick={() => handleSaveData()} colorScheme="green">
-              Potvrdiť smeny
+              Confirm shifts
             </Button>
             <Button onClick={() => handleDeleteShifts()} colorScheme="red">
               Delete shifts
@@ -204,14 +213,13 @@ const Shifts = () => {
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
-        bg="white"
         m="0.75rem"
         borderRadius="0.5rem"
         p="1rem"
         mb="4rem"
       >
-        <Heading>Smeny</Heading>
-
+        <Heading>Shifts</Heading>
+        {console.log(shifts)}
         {shifts ? (
           <Flex
             flexDirection="column"
@@ -235,11 +243,11 @@ const Shifts = () => {
                           {item.name} {item.time && item.time}
                         </Text>
 
-                        {user.email === 'petergacj@gmail.com' && (
+                        {user.isSuperAdmin && (
                           <Box>
                             <Input
                               type="text"
-                              placeholder="Čas"
+                              placeholder="Time"
                               onChange={(e) => setTimeInput(e.target.value)}
                               m="0.5rem"
                               w="10rem"
@@ -250,7 +258,7 @@ const Shifts = () => {
                               }
                               colorScheme="red"
                             >
-                              Pridať
+                              Add
                             </Button>
                           </Box>
                         )}
@@ -261,24 +269,23 @@ const Shifts = () => {
               ))}
           </Flex>
         ) : (
-          <Text>Smeny ešte neboli vytvorené</Text>
+          <Text>Shifts were not created yet</Text>
         )}
       </Box>
       {user.isSuperAdmin && (
         <Box
           mb={300}
           gap={10}
-          backgroundColor="white"
           p="1rem"
           m="0.75rem"
           borderRadius="0.5rem"
           fontFamily="Poppins"
         >
-          <Heading fontFamily="Poppins">Smena v daný deň</Heading>
+          <Heading fontFamily="Poppins">Shift that worked this day</Heading>
           {inputs.map((input, index) => (
             <div key={index}>
               <InputGroup mt="0.5rem" mb="0.5rem">
-                <InputLeftAddon>Meno</InputLeftAddon>
+                <InputLeftAddon>Name</InputLeftAddon>
                 <Input
                   type="text"
                   placeholder="Meno"
@@ -291,7 +298,7 @@ const Shifts = () => {
                 />
               </InputGroup>
               <InputGroup>
-                <InputLeftAddon>Čas</InputLeftAddon>
+                <InputLeftAddon>Time</InputLeftAddon>
                 <Input
                   type="number"
                   placeholder="Time"
@@ -307,10 +314,10 @@ const Shifts = () => {
           ))}
           <Box mt="1rem" gap="1rem">
             <Button onClick={handleAddInput} mr="1rem">
-              Pridať osobu
+              Add person
             </Button>
 
-            <Button onClick={() => handleSubmitShifts()}>Uložit</Button>
+            <Button onClick={() => handleSubmitShifts()}>Save</Button>
           </Box>
         </Box>
       )}

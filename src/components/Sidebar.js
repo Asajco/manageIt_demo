@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom'
 import { useFetchUser } from '../hooks/useFetchUser'
 import { CiLogout } from 'react-icons/ci'
 import { useAuth } from '../store/authContext'
+import ToggleColorButton from './ToggleColorButton'
 
 const Sidebar = () => {
   // Destructure props here
@@ -49,7 +50,7 @@ const Sidebar = () => {
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">
             <Button colorScheme="red" mr={3} onClick={onClose}>
-              Zatvoriť
+              Close
             </Button>
           </DrawerHeader>
           <DrawerBody
@@ -62,23 +63,23 @@ const Sidebar = () => {
             mt="3rem"
           >
             <Link onClick={onClose} to="/">
-              Domov
+              Home
             </Link>
             <Link onClick={onClose} to="/changed">
-              Zmené položky
+              Changed Items
             </Link>
             <Link onClick={onClose} to="/facturation">
-              Uzávierky
+              Closures
             </Link>
             <Link onClick={onClose} to="/shifts">
-              Smeny
+              Shifts
             </Link>
             <Link onClick={onClose} to="/profile">
-              Profil
+              Profile
             </Link>
             {user && user.isSuperAdmin && (
               <Link onClick={onClose} to="/settings">
-                Nastavenia
+                Settings
               </Link>
             )}
             <Button
@@ -96,6 +97,7 @@ const Sidebar = () => {
                 style={{ position: 'absolute', fontWeight: 'bold' }}
               />
             </Button>
+            <ToggleColorButton />
           </DrawerBody>
         </DrawerContent>
         <DrawerFooter></DrawerFooter>

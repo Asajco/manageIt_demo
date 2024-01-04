@@ -8,7 +8,7 @@ import { BrowserRouter, HashRouter } from 'react-router-dom'
 import { TimerProvider } from './store/TimeContext'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 const config = {
-  initialColorMode: 'light',
+  initialColorMode: 'dark',
   useSystemColorMode: false,
 }
 const theme = extendTheme({ config })

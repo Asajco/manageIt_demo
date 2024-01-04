@@ -114,8 +114,10 @@ const SignUpForShift = () => {
           </Flex>
         ))} */}
 
-      <Button onClick={() => handleSendData()}>Potvrdiť</Button>
-      {user.email === 'petergacj@gmail.com' && (
+      <Button onClick={() => handleSendData()} m="0.5rem">
+        Confirm
+      </Button>
+      {user.isSuperAdmin && (
         <Button onClick={() => handleDeleteData()}>Clear db</Button>
       )}
     </Flex>

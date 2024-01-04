@@ -8,7 +8,7 @@ import { useFetchUser } from '../hooks/useFetchUser'
 import { CiLogout } from 'react-icons/ci'
 import { IoLogIn } from 'react-icons/io5'
 import Sidebar from './Sidebar'
-
+import { colours } from '../store/colors'
 const Header = () => {
   const image = require('../assets/break.jpeg')
   const { isOpen, onOpen, onClose } = useDisclosure() // Use useDisclosure
@@ -25,15 +25,18 @@ const Header = () => {
   }
   return (
     <Flex
-      backgroundColor="#b31b22"
+      bgColor={`${colours.primaryColor}`}
       flexDirection="row"
       justifyContent={currentUser ? 'space-between' : 'space-around'}
       gap={10}
+      h="5rem"
       alignItems="center"
       position="relative"
     >
       <Link to="/">
-        <Image src={image} w="100px" h="100px" scale={1.4} />
+        <Text fontFamily="Poppins" fontWeight="bold" ml="1rem">
+          ManageIT
+        </Text>
       </Link>
       {currentUser ? (
         <Text
@@ -44,7 +47,7 @@ const Header = () => {
           fontWeight="bold"
           fontSize="18"
         >
-          Ahoj {user && user.name}!
+          Hello {user && user.name}!
         </Text>
       ) : null}
       {!currentUser ? (

@@ -7,13 +7,12 @@ import { getAuth } from 'firebase/auth'
 import 'firebase/compat/auth'
 
 const app = firebase.initializeApp({
-  apiKey: 'AIzaSyA3lDtgtfAHqw1F82hztrjvN0ZgvuBMt7E',
-  authDomain: 'break-inventory.firebaseapp.com',
-  projectId: 'break-inventory',
-  storageBucket: 'break-inventory.appspot.com',
-  messagingSenderId: '136598683822',
-  appId: '1:136598683822:web:94e2b9b4f2da819a586d3f',
-  measurementId: 'G-V7WTVL4KT0',
+  apiKey: 'AIzaSyD29twrG-RIyomi5eg6EUCVYNxjlokIo8Q',
+  authDomain: 'manageit-demo.firebaseapp.com',
+  projectId: 'manageit-demo',
+  storageBucket: 'manageit-demo.appspot.com',
+  messagingSenderId: '1042223311185',
+  appId: '1:1042223311185:web:925a6362444e08f4a80b70',
 })
 
 // Initialize Firebase

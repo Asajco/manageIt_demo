@@ -22,11 +22,14 @@ const Settings = () => {
   return (
     <Box mt="2rem">
       {/* <ToggleColorButton /> */}
-      <Button onClick={() => setToggleRegistration(!toggleRegistration)}>
-        {toggleRegistration ? 'X' : 'Pridať používateľa'}
+      <Button
+        onClick={() => setToggleRegistration(!toggleRegistration)}
+        mr="1rem"
+      >
+        {toggleRegistration ? 'X' : 'Add user'}
       </Button>
       <Button onClick={() => setToggleAddNewItem(!toggleAddNewItem)}>
-        {toggleAddNewItem ? 'X' : 'Pridať položku menu'}
+        {toggleAddNewItem ? 'X' : 'Add item to storage'}
       </Button>
 
       {toggleRegistration && <SignUp />}
@@ -37,7 +40,7 @@ const Settings = () => {
         mt="3rem"
         fontSize="1.5rem"
       >
-        Odpracované smeny
+        Hours worked
       </Heading>
       <Accordion allowMultiple defaultIndex={[0]} mb="1rem">
         {workTime &&

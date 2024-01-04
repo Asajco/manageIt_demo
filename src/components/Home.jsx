@@ -15,6 +15,7 @@ import {
   Select,
   Text,
 } from '@chakra-ui/react'
+import { colours } from '../store/colors'
 const Home = () => {
   const { loading, items, setItems } = useHook()
   const [category, setCategory] = useState('')
@@ -43,13 +44,14 @@ const Home = () => {
   }
 
   return (
-    <Box p={13} maxHeight="70.5vh" color="black" mb="4rem">
+    <Box p={13} maxHeight="70.5vh" mb="4rem">
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{
-          backgroundColor: 'white',
           borderRadius: '0.5rem',
           padding: '0.5rem',
+          // borderWidth: '2px',
+          // borderColor: '#34cb91',
         }}
       >
         <Select
@@ -60,33 +62,34 @@ const Home = () => {
           value={category}
         >
           <option value="" disabled>
-            Vyber kategóriu
+            Select category
           </option>
           <option value="rum">Rum</option>
           <option value="vodka">Vodka</option>
-          <option value="likery">Likéry</option>
+          <option value="likery">Liquor</option>
           <option value="whiskey">Whiskey</option>
-          <option value="destilaty">Destiláty</option>
-          <option value="nealko">Nealko</option>
-          <option value="other">Ostatný alkohol</option>
-          <option value="pivo">Pivo</option>
-          <option value="vino">Víno</option>
-          <option value="snacks">Snacky</option>
+          <option value="destilaty">Destilates</option>
+          <option value="nealko">Non alcoholic</option>
+          <option value="other">Other alcohol</option>
+          <option value="pivo">Beer</option>
+          <option value="vino">Wine</option>
+          <option value="snacks">Snack</option>
         </Select>
         <Input
           {...register('name')}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Názov produktu..."
+          placeholder="Name of item..."
         />
-        <Button onClick={() => setCategory('')} mt={3} colorScheme="red">
-          Vymaž filter
+        <Button onClick={() => setCategory('')} mt={3} colorScheme="green">
+          Delete filter
         </Button>
       </form>
       <Grid
         gap={6}
         templateColumns="repeat(2, 1fr)"
         mt={2}
-        backgroundColor="white"
+        borderColor={colours.primaryColor}
+        borderWidth="2px"
         borderRadius="0.4rem"
         p={3}
       >

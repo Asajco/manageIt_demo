@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { useNavigate as navigate } from 'react-router'
 import { Link } from 'react-router-dom'
-import { colors } from '../store/colors'
+import { colours } from '../store/colors'
 const SignUp = () => {
   const emailRef = useRef(null)
   const { signup } = useAuth()
@@ -46,7 +46,7 @@ const SignUp = () => {
   }
   return (
     <Box>
-      <Heading>Registrácia</Heading>
+      <Heading>Register</Heading>
       {error && <div>{error}</div>}
       <form
         onSubmit={onSubmit}
@@ -58,32 +58,32 @@ const SignUp = () => {
         }}
       >
         <InputGroup>
-          <InputLeftAddon bg={colors.primaryBreak} color="white">
+          <InputLeftAddon bg={colours.primaryColor} color="white">
             Email
           </InputLeftAddon>
           <Input type="email" ref={emailRef} />
         </InputGroup>
         <InputGroup>
-          <InputLeftAddon bg={colors.primaryBreak} color="white">
-            Meno
+          <InputLeftAddon bg={colours.primaryColor} color="white">
+            Name
           </InputLeftAddon>
           <Input type="text" ref={nameRef} />
         </InputGroup>
         <InputGroup>
-          <InputLeftAddon bg={colors.primaryBreak} color="white">
-            Heslo
+          <InputLeftAddon bg={colours.primaryColor} color="white">
+            Password
           </InputLeftAddon>
           <Input type="password" ref={passwordRef} />
         </InputGroup>
         <InputGroup>
-          <InputLeftAddon bg={colors.primaryBreak} color="white">
-            Potvrdenie hesla
+          <InputLeftAddon bg={colours.primaryColor} color="white">
+            Confirm password
           </InputLeftAddon>
           <Input type="password" ref={passwordConfirmRef} />
         </InputGroup>
 
         <Button colorScheme="red" mt="1rem" type="submit">
-          Vytvor účet
+          Create account
         </Button>
       </form>
     </Box>
