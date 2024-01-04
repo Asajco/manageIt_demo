@@ -32,6 +32,7 @@ const Facturation = () => {
   const sortedUzavierky = [...uzavierky].sort((a, b) =>
     moment(a.date).diff(moment(b.date)),
   )
+  console.log(uzavierky)
   return (
     <Box w="100vw" minH="100vh">
       <UzavierkaModal isOpen={isOpen} />{' '}

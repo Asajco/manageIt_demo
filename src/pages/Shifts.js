@@ -25,7 +25,7 @@ import moment from 'moment'
 import { useFetchUser } from '../hooks/useFetchUser'
 const Shifts = () => {
   const [toggleForm, setToggleForm] = useState(false)
-  const { shiftsSign, shifts, workTime, setWorkTime } = useHook()
+  const { shiftsSign, shifts, setShifts, setWorkTime } = useHook()
   const [shiftDate, setShiftDate] = useState(null)
   const [timeInput, setTimeInput] = useState(null)
   const { user } = useFetchUser()
@@ -66,11 +66,13 @@ const Shifts = () => {
       }
     })
   }
-
+  console.log(selectedNames)
   const handleSaveData = () => {
     setDoc(doc(collection(db, 'shifts'), 'shifts'), {
       ...selectedNames, // Include other data in the document
     })
+    setShifts(selectedNames)
+    setSelectedNames('')
     toast({
       title: `Shifts were succesfully submited`,
       status: 'success',
@@ -139,6 +141,7 @@ const Shifts = () => {
     try {
       const dayDocRef = doc(collection(db, 'shifts'), 'shifts')
       await deleteDoc(dayDocRef)
+      setShifts([])
       toast({
         title: 'Shifts succesfully deleted',
         position: 'top-right',

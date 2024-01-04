@@ -38,12 +38,10 @@ const UzavierkaModal = () => {
     setDoc(doc(collection(db, 'uzavierky'), itemId), {
       id: itemId, // Save the custom ID as a field in the document
       ...data, // Include other data in the document
-    }).then(() => {
-      // The state update will only be visible after a re-render.
-      const newItem = { id: itemId, ...data }
-      setUzavierky(uzavierky.push(newItem))
     })
-
+    const newItem = { id: itemId, ...data }
+    setUzavierky((prevUzavierky) => [...prevUzavierky, newItem])
+    console.log(uzavierky)
     toast({
       title: 'Successful creation of the shutter',
       status: 'success',
