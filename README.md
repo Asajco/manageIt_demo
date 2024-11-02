@@ -1,3 +1,5 @@
+**WIP**
+
 **ManageIT** is inventory management app, where owner of bar, can see shutter of day, we state 
 ManageIT is a comprehensive ReactJS-based web application designed to streamline and enhance the management of product inventory within a company. With a user-friendly interface and robust features, ManageIT empowers users to efficiently monitor and control the current state of each product in storage, track changes, manage shifts, add new items, add new users, and record daily sales.
 
